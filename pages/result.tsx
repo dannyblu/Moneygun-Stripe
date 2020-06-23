@@ -1,5 +1,8 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+
+import { Container, Row, Spinner } from "react-bootstrap";
+
 export default function Result() {
   const router = useRouter();
   const { data, error } = useSWR(
@@ -8,10 +11,19 @@ export default function Result() {
   );
 
   return (
-    <div>
-      <h1>Playing Cool!</h1>
-      <h3>Session ID:</h3>
-      <pre>{data ? JSON.stringify(data, null, 2) : "Stay still sir..."}</pre>
-    </div>
+    <Container className="p-3">
+      <Row>
+        <h1>Playing Cool!</h1>
+      </Row>
+
+      {data ? (
+        <Row>
+          <h3>Session ID:</h3>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </Row>
+      ) : (
+        <Spinner animation="border" />
+      )}
+    </Container>
   );
 }
